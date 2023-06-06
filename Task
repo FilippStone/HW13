@@ -1,0 +1,44 @@
+from MyExceptions import MyMinLengthError, MyTriangleError
+
+
+class Triangle:
+
+    def __init__(self, a: int, b: int, c: int) -> None:
+        if a > 0:
+            self.a = a
+        else:
+            raise MyMinLengthError(a, 0)
+        if b > 0:
+            self.b = b
+        else:
+            raise MyMinLengthError(b, 0)
+        if c > 0:
+            self.c = c
+        else:
+            raise MyMinLengthError(c, 0)
+
+    def check_sides(self):
+
+        check1 = self.a + self.b
+        check2 = self.a + self.c
+        check3 = self.b + self.c
+        if (check1 < self.c or check2 < self.b or check3 < self.a):
+            raise MyTriangleError(self.a, self.b, self.c)
+        else:
+            if (self.a == self.b and self.b == self.c and self.c == self.a):
+                print("Треугольник равносторонний")
+            elif (self.a == self.b or self.b == self.c or self.c == self.a):
+                print("Треугольник равнобедренный")
+            else:
+                print("Треугольник разносторонний")
+
+
+if __name__ == "__main__":
+    try:
+        a = int(input("Введите длинну стороны треугольника cторона а: "))
+        b = int(input("Введите длинну стороны треугольника cторона b: "))
+        c = int(input("Введите длинну стороны треугольника cторона c: "))
+        MyTriangle = Triangle(a, b, c)
+        MyTriangle.check_sides()
+    except (ValueError, MyMinLengthError, MyTriangleError) as e:
+        print(f"\033[31m Произошла ошибка: {e}\033[0m")
